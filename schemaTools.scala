@@ -18,14 +18,6 @@ def deserializeSchema(json: String): StructType = {
 
 // COMMAND ----------
 
-def generateSchemaObjects(): Unit = {
-  persistSchema("/mnt/databricks-caryl/meetup/2017/05/10/19*", "/dbfs/mnt/databricks-caryl/serSchem.txt")
-  persistSchema("/mnt/databricks-caryl/meetupMemFirehose2017/05/29/*", "/dbfs/mnt/databricks-caryl/serMemSchem.txt")
-  persistSchema("/mnt/databricks-caryl/meetupEvFirehose2017/06/01/*", "/dbfs/mnt/databricks-caryl/serEvSchem.txt")
-}
-
-// COMMAND ----------
-
 def persistSchema(f:String, p:String): Unit = {
   import java.io.{PrintWriter, File}
   val data = spark.read.json(f)
@@ -33,4 +25,12 @@ def persistSchema(f:String, p:String): Unit = {
   val pw = new PrintWriter(new File(p))
   pw.write(schema)
   pw.close
+}
+
+// COMMAND ----------
+
+def generateSchemaObjects(): Unit = {
+  persistSchema("/mnt/databricks-caryl/meetup/2017/05/10/19*", "/dbfs/mnt/databricks-caryl/serSchem.txt")
+  persistSchema("/mnt/databricks-caryl/meetupMemFirehose2017/05/29/*", "/dbfs/mnt/databricks-caryl/serMemSchem.txt")
+  persistSchema("/mnt/databricks-caryl/meetupEvFirehose2017/06/01/*", "/dbfs/mnt/databricks-caryl/serEvSchem.txt")
 }
